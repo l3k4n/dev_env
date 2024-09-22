@@ -1,7 +1,3 @@
-# apt-get -qq -y install () { apt-get -qq -y install $1 }
-apt-get -qq -y install () { echo "installing $@"; }
-notify () { echo "$1"; }
-
 # git
 apt-get -qq -y install git-all
 
