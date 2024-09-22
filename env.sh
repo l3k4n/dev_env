@@ -12,6 +12,8 @@ make
 make install
 cd ..
 rm -rf i3blocks
+# make i3 default WM
+sudo update-alternatives --install /usr/bin/x-session-manager x-session-manager /usr/bin/i3 60
 
 # picom
 # install dependencies
