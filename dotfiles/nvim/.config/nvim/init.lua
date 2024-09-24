@@ -94,8 +94,7 @@ require("setup.lsp").setup_servers({
   },
   clangd = {},
   eslint = {},
-  tsserver = {},
-  rust_analyzer = {},
+  ts_ls = {},
 })
 
 -- lsp progress
