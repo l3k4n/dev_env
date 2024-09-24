@@ -4,6 +4,8 @@ floating_modifier $mod
 # Font for window titles
 font pango:NotoSans 8
 
+# turn of laptop screen on startup
+exec xrandr --output eDP-1 --off
 # change shitty defaults
 hide_edge_borders both
 for_window [class="^.*"] border pixel 0
