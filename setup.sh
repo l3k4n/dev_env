@@ -97,6 +97,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 nvm install 20
 
+inform_configure "c++ standard dependencies"
+sudo apt-get -qq -y libstdc++-12-dev # save myself the headache
+
 ####################################################### DOTFILES
 inform_configure "dotfiles"
 cd dotfiles
