@@ -65,7 +65,8 @@ rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
 add_to_bashrc 'PATH="$PATH:/opt/nvim-linux64/bin"'
 rm nvim-linux64.tar.gz
-sudo apt-get -qq -y install xclip # for nvim clipboard
+sudo apt-get -qq -y install xclip # for clipboard
+sudo apt-get -qq -y install ripgrep # for telescope
 
 # tmux
 inform_configure "tmux"
