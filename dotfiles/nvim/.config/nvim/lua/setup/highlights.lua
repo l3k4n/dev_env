@@ -15,9 +15,15 @@ vim.api.nvim_set_hl(0, 'GitSignsStagedChange', { link = 'GitSignsChange' })
 vim.api.nvim_set_hl(0, 'GitSignsStagedChangedelete', { link = 'GitSignsChange' })
 
 -- lualine
-local b_normal = vim.api.nvim_get_hl(0, { name = "lualine_b_normal" });
-local c_normal = vim.api.nvim_get_hl(0, { name = "lualine_c_normal" });
-b_normal.bg = "#090c0f";
-c_normal.bg = "#090c0f";
-vim.api.nvim_set_hl(0, "lualine_b_normal", b_normal)
-vim.api.nvim_set_hl(0, "lualine_c_normal", c_normal)
+---@param name string
+local function update_lualine_section_bg(name)
+  local new_hl = vim.api.nvim_get_hl(0, { name = name });
+  new_hl.bg = "#090c0f"
+  vim.api.nvim_set_hl(0, name, new_hl)
+end
+update_lualine_section_bg("lualine_c_normal");
+update_lualine_section_bg("lualine_b_replace");
+update_lualine_section_bg("lualine_b_command");
+update_lualine_section_bg("lualine_b_visual");
+update_lualine_section_bg("lualine_b_normal");
+update_lualine_section_bg("lualine_b_insert");
