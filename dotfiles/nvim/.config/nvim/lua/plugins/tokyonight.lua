@@ -17,9 +17,7 @@ return {
       lualine_bold = true,
       hide_inactive_statusline = true,
 
-      on_colors = function(colors)
-        colors.hint = colors.warning
-      end,
+      on_colors = function(colors) colors.hint = colors.orange end,
       on_highlights = function(hl, c)
         -- preferred syntax group styles
         hl["@string"] = { fg = "#f6c177" }
@@ -30,14 +28,11 @@ return {
         hl["@punctuation.bracket"] = { link = "@punctuation" }
         hl["@punctuation.delimiter"] = { link = "@punctuation" }
 
-        -- borderless telescope
-        hl.TelescopeNormal = { bg = c.bg_dark, fg = c.fg_dark }
-        hl.TelescopeBorder = { bg = c.bg_dark, fg = c.bg_dark }
-        hl.TelescopePromptNormal = { bg = c.bg_dark }
-        hl.TelescopePromptBorder = { bg = c.bg_dark, fg = c.bg_dark }
-        hl.TelescopePromptTitle = { bg = c.bg_dark, fg = c.bg_dark }
-        hl.TelescopePreviewTitle = { bg = c.bg_dark, fg = c.bg_dark }
-        hl.TelescopeResultsTitle = { bg = c.bg_dark, fg = c.bg_dark }
+        hl.TelescopeNormal = { bg = "#090c0f", fg = c.fg_dark }
+        hl.TelescopeBorder = { bg = "#090c0f", fg = c.bg_dark }
+        hl.TelescopePromptNormal = { bg = "#090c0f" }
+        hl.TelescopePromptBorder = { bg = "#090c0f", fg = "#11161c" }
+        hl.TelescopePromptTitle = { bg = "#090c0f", fg = "#11161c"  }
       end,
     })
 

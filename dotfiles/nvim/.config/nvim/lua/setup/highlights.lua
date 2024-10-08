@@ -16,14 +16,25 @@ vim.api.nvim_set_hl(0, 'GitSignsStagedChangedelete', { link = 'GitSignsChange' }
 
 -- lualine
 ---@param name string
-local function update_lualine_section_bg(name)
+---@param bg_color string
+local function update_lualine_section_bg(name, bg_color)
   local new_hl = vim.api.nvim_get_hl(0, { name = name });
-  new_hl.bg = "#090c0f"
+  new_hl.bg = bg_color
   vim.api.nvim_set_hl(0, name, new_hl)
 end
-update_lualine_section_bg("lualine_c_normal");
-update_lualine_section_bg("lualine_b_replace");
-update_lualine_section_bg("lualine_b_command");
-update_lualine_section_bg("lualine_b_visual");
-update_lualine_section_bg("lualine_b_normal");
-update_lualine_section_bg("lualine_b_insert");
+update_lualine_section_bg("lualine_c_normal", "#090c0f")
+update_lualine_section_bg("lualine_b_replace", "#090c0f")
+update_lualine_section_bg("lualine_b_command", "#090c0f")
+update_lualine_section_bg("lualine_b_visual", "#090c0f")
+update_lualine_section_bg("lualine_b_normal", "#090c0f")
+update_lualine_section_bg("lualine_b_insert", "#090c0f")
+update_lualine_section_bg("lualine_a_inactive", "#090c0f")
+update_lualine_section_bg("lualine_b_inactive", "#090c0f")
+update_lualine_section_bg("lualine_c_inactive", "#090c0f")
+
+-- nvim-cmp
+vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#090c0f" })
+vim.api.nvim_set_hl(0, "CmpFloatBorderComp", { bg = "#090c0f", fg = "#090c0f" })
+vim.api.nvim_set_hl(0, "CmpFloatBorderDoc", { bg = "#090c0f", fg = "#11161c" })
+
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#090c0f", blend = 10 })

@@ -16,18 +16,37 @@ return {
     local luasnip = require('luasnip')
     require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup({})
-    --
+
     cmp.setup({
+      enabled = function()
+        local context = require("cmp.config.context")
+        if vim.api.nvim_get_mode().mode == 'c' then
+          -- keep completion if in command mode
+          return true
+        else
+          local in_comment = context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
+          local in_string = context.in_treesitter_capture("string") or context.in_syntax_group("String")
+          local in_char = context.in_treesitter_capture("character") or context.in_syntax_group("Character")
+          -- disable completions for comment, string and char
+          return not in_comment and not in_string and not in_char
+        end
+      end,
       completion = { completeopt = 'menu,menuone,noinsert', },
       snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
       window = {
-        documentation = { winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None" }
+        completion = {
+          border = "rounded",
+          scrollbar = false,
+          winhighlight = "Normal:CmpNormal,FloatBorder:CmpFloatBorderComp,Search:None",
+          winblend = 10,
+        },
+        documentation = {
+          border = "rounded",
+          winhighlight = "Normal:CmpNormal,FloatBorder:CmpFloatBorderDoc,Search:None",
+          winblend = 10,
+        }
       },
-
       mapping = cmp.mapping.preset.insert {
-        ['<C-Space>'] = cmp.mapping.complete({}),
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<CR>'] = cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
