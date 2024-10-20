@@ -81,6 +81,10 @@ bindsym $mod+Control+x exec xrandr --output eDP-1 --auto
 
 bar {
     status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    i3bar_command  i3bar -t
+    colors {
+        background #000000bb
+    }
     bindsym button4 nop
     bindsym button5 nop
 }
