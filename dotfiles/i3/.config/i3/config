@@ -14,7 +14,7 @@ popup_during_fullscreen smart
 # startup picom
 exec --no-startup-id picom -b
 # set bg image
-exec --no-startup-id feh --bg-fill .local/share/wallpapers/wallpaper.png
+exec --no-startup-id feh --bg-fill .local/share/wallpapers/wallpaper.jpg
 # Start XDG autostart .desktop files using dex
 exec --no-startup-id dex --autostart --environment i3
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
