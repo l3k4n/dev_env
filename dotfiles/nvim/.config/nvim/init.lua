@@ -144,7 +144,7 @@ require("fidget").setup({
 -- Highlighting on yank
 require("setup.yankHighlight")
 require("setup.highlights")
-require("setup.toggleFugitive")
+require("setup.fugitiveHelpers")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
