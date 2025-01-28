@@ -1,7 +1,7 @@
 source utils.sh
 
-if [ $(id -u) -ne 0 ]; then
-	error "Script needs root permision"
+if [ $(id -u) -eq 0 ]; then
+	error "Running script as root will install files at /root"
 	exit
 fi
 
@@ -10,20 +10,23 @@ silent_exec "sudo apt-get -qq -y update"
 silent_exec "sudo apt-get -qq -y upgrade"
 
 inform "installing general dependencies"
-apt_install cmake git-all stow autoconf
+apt_install cmake git-all stow autoconf build-essential
 
 # dotfiles
 inform "stowing dotfiles"
-cd dotfiles
+mkdir -p $HOME/.dotfiles
+note "copied dotfiles to '$HOME/.dotfiles'"
+cp -r dotfiles/* $HOME/.dotfiles
+cd $HOME/.dotfiles
 for dir in $(ls -d */); do
     dir=${dir%%/}
-    stow -D $dir -t ~
-    stow "$dir" -t ~
-    note "stowed '$dir' dotfiles"
+    stow -R --no-folding "$dir" -t $HOME
+    note "stowed $dir"
 done
-cd ..
+cd -
 
-if query "Do you want install gnab driver (last tested on kernel v5.15, mint 21.3 virginia)?"; then
+# wifi adapter driver
+if query "Do you want install gnab rtl8812au driver (last tested on kernel v5.15, mint 21.3 virginia)?"; then
     git_clone https://github.com/gnab/rtl8812au.git
     cd rtl8812au
     silent_exec make
@@ -41,7 +44,7 @@ if query "Do you want set basic git global config opts?"; then
     echo -ne "${QUERY_COLOR}  user.email: ${RESET_COLOR}"
     read -r email
     git config --global user.email "$email"
-    note $(git config --global --list)
+    note "$(git config --global --list)"
 fi
 
 # i3
@@ -95,7 +98,7 @@ if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     apt_install python3-pip
     silent_exec sudo python3 -m pip install qmk
     bashrc_append 'PATH="$PATH:$HOME/.local/bin"'
-    source ~/.bashrc
+    source $HOME/.bashrc
     note "running qmk setup (this might take a few minutes)"
     silent_exec qmk setup -y zsa/qmk_firmware -b firmware23
 fi
@@ -110,7 +113,7 @@ fi
 if query "Do you want to install nodejs?"; then
     inform "setting up nodejs"
     note "installing nvm"
-    silent_exec curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    silent_exec "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
     export NVM_DIR="$HOME/.nvm"
     note "installing nodejs v20"
     silent_exec "source $NVM_DIR/nvm.sh && nvm install 20"
@@ -119,7 +122,7 @@ fi
 # c++
 if query "Do you want to install c++ std lib?"; then
     inform "c++ standard dependencies"
-    sudo apt-get -qq -y libstdc++-12-dev
+    apt_install libstdc++-12-dev
 fi
 
 inform "Setup complete"
