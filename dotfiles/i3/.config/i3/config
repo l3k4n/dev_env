@@ -13,6 +13,8 @@ popup_during_fullscreen smart
 
 # startup picom
 exec --no-startup-id picom -b
+# startup playerctld
+exec --no-startup-id playerctld daemon
 # set bg image
 exec --no-startup-id feh --bg-fill .local/share/wallpapers/wallpaper.jpg
 # Start XDG autostart .desktop files using dex
