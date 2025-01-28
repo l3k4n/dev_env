@@ -23,6 +23,15 @@ for dir in $(ls -d */); do
 done
 cd ..
 
+if query "Do you want install gnab driver (last tested on kernel v5.15, mint 21.3 virginia)?"; then
+    git_clone https://github.com/gnab/rtl8812au.git
+    cd rtl8812au
+    silent_exec make
+    silent_exec sudo insmod 8812au.ko
+    cd ..
+    rm -rf rtl8812au
+fi
+
 # git config
 if query "Do you want set basic git global config opts?"; then
     inform "setting git global config"
