@@ -17,7 +17,7 @@ silent_exec() {
 }
 
 query() {
-    echo -ne "${QUERY_COLOR}$@ (y/n): ${RESET_COLOR}"
+    echo -ne "\n${QUERY_COLOR}$@ (y/n): ${RESET_COLOR}"
     read -r response
 
     if [[ "$response" =~ ^[Yy]$ ]]; then

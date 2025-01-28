@@ -1,11 +1,9 @@
+source utils.sh
+
 if [ $(id -u) -ne 0 ]; then
-	echo "Script needs root permision"
+	error "Script needs root permision"
 	exit
 fi
-
-source a.sh
-
-error "TODO: Query for git config options name, email, ssh"
 
 inform "updating apt"
 silent_exec "sudo apt-get -qq -y update"
@@ -24,6 +22,18 @@ for dir in $(ls -d */); do
     note "stowed '$dir' dotfiles"
 done
 cd ..
+
+# git config
+if query "Do you want set basic git global config opts?"; then
+    inform "setting git global config"
+    echo -ne "${QUERY_COLOR}  user.name: ${RESET_COLOR}"
+    read -r name
+    git config --global user.name "$name"
+    echo -ne "${QUERY_COLOR}  user.email: ${RESET_COLOR}"
+    read -r email
+    git config --global user.email "$email"
+    note $(git config --global --list)
+fi
 
 # i3
 inform "setting up i3"
@@ -70,7 +80,7 @@ silent_exec sudo tar -C /opt -xzf nvim-linux64.tar.gz
 bashrc_append 'PATH="$PATH:/opt/nvim-linux64/bin"'
 rm nvim-linux64.tar.gz
 
-# # qmk
+# qmk
 if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     inform "setting up qmk"
     apt_install python3-pip
@@ -103,5 +113,6 @@ if query "Do you want to install c++ std lib?"; then
     sudo apt-get -qq -y libstdc++-12-dev
 fi
 
-inform "NOTE: If i3 is installed you can run delete your current WM"
-inform "Enjoy :)"
+inform "Setup complete"
+note "you should reboot to make sure all configs and new packages are properly loaded"
+note "if i3wm is installed you should delete your current WM"
