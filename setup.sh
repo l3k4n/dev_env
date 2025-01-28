@@ -44,6 +44,7 @@ if query "Do you want set basic git global config opts?"; then
     echo -ne "${QUERY_COLOR}  user.email: ${RESET_COLOR}"
     read -r email
     git config --global user.email "$email"
+    git config --global url.ssh://git@github.com/.insteadOf https://github.com/
     note "$(git config --global --list)"
 fi
 
