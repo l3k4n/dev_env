@@ -26,13 +26,12 @@ done
 cd -
 
 # wifi adapter driver
-if query "Do you want install gnab rtl8812au driver (last tested on kernel v5.15, mint 21.3 virginia)?"; then
-    git_clone https://github.com/gnab/rtl8812au.git
-    cd rtl8812au
-    silent_exec make
-    silent_exec sudo insmod 8812au.ko
+if query "Do you want install morrownr/8812au-20210820 driver (last tested on kernel v5.15.0-131-generic, Mint 21.3 Virginia)?"; then
+    git clone https://github.com/morrownr/8812au-20210820.git
+    cd 8812au-20210820
+    silent_exec "sudo ./install-driver.sh"
     cd ..
-    rm -rf rtl8812au
+    rm -rf 8812au-20210820
 fi
 
 # git config
