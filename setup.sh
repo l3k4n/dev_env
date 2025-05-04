@@ -31,9 +31,10 @@ cd -
 inform "setting up tmux"
 apt_install tmux
 
-# tmux
+# sway
 inform "setting up sway"
 apt_install sway
+apt_install_no_recommends sddm
 
 # neovim
 inform "setting up neovim"

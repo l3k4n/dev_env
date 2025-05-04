@@ -35,6 +35,11 @@ apt_install() {
     silent_exec sudo apt-get install -y $*
 }
 
+apt_install_no_recommends() {
+    note "apt installing: $*"
+    silent_exec sudo apt-get install -y --no-install-recommends $*
+}
+
 git_clone() {
     GIT_TERMINAL_PROMPT=0
     note "git cloning: $@"
