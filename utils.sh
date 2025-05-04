@@ -8,7 +8,10 @@ PROGRESS_SPINNER="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
 
 inform() { echo -e "\n${INFORM_COLOR}$@${RESET_COLOR}"; }
 warn() { echo -e "\n${WARNING_COLOR}WARNING: $@${RESET_COLOR}"; }
-error() { echo -e "\n${ERROR_COLOR}ERROR: $@${RESET_COLOR}"; }
+error() {
+    echo -e "\n${ERROR_COLOR}ERROR: $@${RESET_COLOR}"
+    exit
+}
 note() { echo -e "${NOTE_COLOR}> $@${RESET_COLOR}"; }
 
 silent_exec() {
