@@ -103,9 +103,12 @@ default_border none
 default_floating_border none
 font pango:monospace 0
 
+gaps inner 10  
+gaps top -10  
+
 bar {
     position bottom
-    status_command i3blocks -c ~/.config/sway/i3blocks.conf
+    swaybar_command waybar
     workspace_min_width 70
     strip_workspace_numbers yes
     font pango:monospace 10

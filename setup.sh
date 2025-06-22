@@ -89,8 +89,9 @@ if query "Do you want install morrownr/8812au-20210820 driver (last tested on ke
 fi
 
 # git config
-if query "Do you want set basic git global config opts?"; then
-    inform "setting git global config"
+inform "setting up git config"
+git config --global user.useConfigOnly true
+if query "Do you want set git global user?"; then
     echo -ne "${QUERY_COLOR}  user.name: ${RESET_COLOR}"
     read -r name
     git config --global user.name "$name"
