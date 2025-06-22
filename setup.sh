@@ -38,7 +38,7 @@ apt_install tmux
 
 # sway
 inform "setting up sway"
-apt_install sway pactl brightnessctl fuzzel
+apt_install sway playerctl pulseaudio-utils brightnessctl fuzzel
 apt_install_no_recommends sddm
 
 # neovim
