@@ -15,6 +15,11 @@ silent_exec "sudo apt-get -qq -y upgrade"
 inform "installing general dependencies"
 apt_install cmake git-all stow autoconf build-essential curl jq
 
+inform "adding aliases to bashrc"
+bashrc_append '. .bash_aliases'
+
+apt_install cmake git-all stow autoconf build-essential curl jq
+
 # dotfiles
 inform "stowing dotfiles"
 mkdir -p $HOME/.dotfiles
@@ -33,7 +38,7 @@ apt_install tmux
 
 # sway
 inform "setting up sway"
-apt_install sway
+apt_install sway pactl brightnessctl fuzzel
 apt_install_no_recommends sddm
 
 # neovim

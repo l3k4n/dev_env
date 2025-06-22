@@ -1,0 +1,123 @@
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term foot
+set $menu fuzzel
+set $resize_step 20px
+
+output * bg "$HOME/.local/share/wallpapers/wallpaper.jpg" fill
+
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock -f -c 000000'
+
+# start terminal
+bindsym $mod+t exec $term
+# kill focused window
+bindsym $mod+Shift+q kill
+# open menu
+bindsym $mod+d exec $menu
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+# move focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# switch workspace
+set $ws1 1
+set $ws2 2:browser
+set $ws3 3:dev
+set $ws4 4:test
+set $ws5 5:music
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+# move container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Ctrl+0 move container to workspace $ws10; workspace $ws10
+# fullscreen
+bindsym $mod+f fullscreen
+# toggle between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# start resize mode
+bindsym $mod+r mode "resize"
+# resize controls
+mode "resize" {
+    bindsym $left resize shrink width $resize_step
+    bindsym $down resize grow height $resize_step
+    bindsym $up resize shrink height $resize_step
+    bindsym $right resize grow width $resize_step
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# volume controls
+bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+# brightness controls
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+# hide borders and title bar
+default_border none 
+default_floating_border none
+font pango:monospace 0
+
+bar {
+    position bottom
+    status_command i3blocks -c ~/.config/sway/i3blocks.conf
+    workspace_min_width 70
+    strip_workspace_numbers yes
+    font pango:monospace 10
+
+    colors {
+        background #00000055
+        focused_workspace  #00000000 #02fb9033 #02fb90
+        inactive_workspace #00000055 #00000055 #555555
+    }
+    # prevent scrolling through workspaces 
+    bindsym button4 nop
+    bindsym button5 nop
+}
+
+input "10182:3395:DELL0BB2:00_27C6:0D43_Touchpad" {
+	natural_scroll enabled
+}
+
+include @sysconfdir@/sway/config.d/*
