@@ -1,0 +1,88 @@
+* {
+    font-family: Liberation Mono;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#battery, #temperature, #custom-mem, #pulseaudio, #clock, #workspaces, #mode {
+    border-radius: 20px;
+    background:  #041119;
+    font-size: 12;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+#workspaces {
+    transition: none;
+}
+
+#workspaces button, #workspaces button.persistent {
+    margin: 0 -5px;
+    background: transparent;
+    color: #084252;
+
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    transition: none;
+    box-shadow: inherit;
+    text-shadow: inherit;
+    border-radius: inherit;
+    border: none;
+}
+
+#workspaces button.focused {
+    color: #41a8a9;
+}
+
+#mode {
+    margin-left: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: none;
+    color: #ffffff;
+}
+
+#clock {
+    padding: 0 20px;
+    color: #41a8a9;
+}
+
+#pulseaudio {
+    margin-right: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: none;
+    color: #1f71cc;
+}
+
+#custom-mem {
+    margin-right: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: none;
+    color: #18f085;
+}
+
+#temperature {
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: none;
+    color: #fe6676;
+}
+
+#temperature.critical {
+    color: #eb4d4b;
+}
+
+#battery {
+    margin-right: 8px;
+    padding: 0 16px;
+    color: #fce402;
+}
+

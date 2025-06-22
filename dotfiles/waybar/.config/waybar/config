@@ -1,0 +1,52 @@
+{
+    "position": "top",
+    "margin": "7",
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "custom/mem", "battery", "temperature"],
+
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+        },
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "clock": {
+        "format": "{:%a, %d %b, %I:%M %p}"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% 🔊",
+        "format-muted": "{volume}% 🔇",
+        "tooltip": false,
+    },
+
+    "custom/mem": {
+        "format": "{}",
+        "interval": 3,
+        "exec": "free -h | awk '/Mem:/{printf $3}'",
+        "tooltip": false,
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+				"format": "{temperatureC}°C",
+        "tooltip": false,
+    },
+
+    "battery": {
+        "format": "{capacity}% 🔋",
+        "format-charging": "{capacity}% ⚡",
+        "tooltip": false,
+    },
+}
