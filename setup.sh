@@ -20,7 +20,7 @@ silent_exec "sudo apt-get -qq -y update"
 silent_exec "sudo apt-get -qq -y upgrade"
 
 inform "installing general dependencies"
-apt_install cmake git-all stow autoconf build-essential curl jq
+apt_install cmake git-all stow autoconf build-essential curl jq wget
 
 inform "adding aliases to bashrc"
 bashrc_append '. .bash_aliases'
@@ -72,6 +72,21 @@ if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     source $HOME/.bashrc
     note "running qmk setup (this might take a few minutes)"
     silent_exec qmk setup -y zsa/qmk_firmware -b firmware23
+fi
+
+# firefox
+if query "Do you want to install/replace with a version from the mozilla repository"; then
+    note "adding mozilla repo to apt sources"
+    sudo install -d -m 0755 /etc/apt/keyrings
+    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
+    echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
+    echo -e "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000" | sudo tee /etc/apt/preferences.d/mozilla
+
+    note "uninstalling firefox-esr"
+    sudo apt-get -qq autoremove --purge firefox-esr
+
+    sudo apt-get update -qq
+    apt_install firefox
 fi
 
 # nodejs
