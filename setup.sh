@@ -5,8 +5,15 @@ if [ $(id -u) -eq 0 ]; then
 fi
 
 if ! which sudo >/dev/null 2>&1; then
-    error "sudo not found. make sure sudo is installed"
+    error "sudo not found. ensure sudo is installed"
 fi
+
+if ! $(mokutil --sb-state | grep -q "SecureBoot disabled"); then
+    error "SecureBoot must be disabled"
+fi
+
+TMP_INSTALL_DIR=$(mktemp)
+note "created tmp dir $TMP_INSTALL_DIR"
 
 inform "updating apt"
 silent_exec "sudo apt-get -qq -y update"
@@ -30,7 +37,7 @@ for dir in $(ls -d */); do
     stow -R --no-folding "$dir" -t $HOME
     note "stowed $dir"
 done
-cd -
+cd ~-
 
 # tmux
 inform "setting up tmux"
@@ -50,12 +57,11 @@ apt_install_no_recommends sddm
 inform "setting up neovim"
 apt_install xclip ripgrep
 note "downloading v0.11.1"
-silent_exec curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.tar.gz
-rm -rf /opt/nvim
+silent_exec curl -L -o $TMP_INSTALL_DIR/nvim.tar.gz https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim /opt/nvim-linux-x86_64
 note "unpacking nvim"
-silent_exec sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+silent_exec sudo tar -C /opt -xzf $TMP_INSTALL_DIR/nvim.tar.gz
 bashrc_append 'PATH="$PATH:/opt/nvim-linux-x86_64/bin"'
-rm nvim-linux-x86_64.tar.gz
 
 # qmk
 if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
@@ -86,11 +92,12 @@ fi
 
 # wifi adapter driver
 if query "Do you want install morrownr/8812au-20210820 driver (last tested on kernel v5.15.0-131-generic, Mint 21.3 Virginia)?"; then
-    git clone https://github.com/morrownr/8812au-20210820.git
-    cd 8812au-20210820
+    note "installing kernel headers"
+    apt_install linux-headers-$(uname -r)
+    git clone https://github.com/morrownr/8812au-20210820.git $TMP_INSTALL_DIR/morrow_driver
+    cd $TMP_INSTALL_DIR/morrow_driver
     silent_exec "sudo ./install-driver.sh"
-    cd ..
-    rm -rf 8812au-20210820
+    cd ~-
 fi
 
 # git config
