@@ -106,7 +106,7 @@ fi
 
 # git config
 git config --global user.useConfigOnly true
-git config --global url."ssh://git@github.com".pushInsteadOf "https://github.com/"
+git config --global url."git@github.com:".pushInsteadOf "https://github.com/"
 if query "Do you want set git global user?"; then
     inform "setting up git config"
     echo -ne "${QUERY_COLOR}  user.name: ${RESET_COLOR}"
