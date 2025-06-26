@@ -54,7 +54,7 @@ apt_install_no_recommends sddm
 
 # neovim
 inform "setting up neovim"
-apt_install xclip ripgrep
+apt_install ripgrep
 note "downloading v0.11.1"
 curl -sS -L -o $TMP_INSTALL_DIR/nvim.tar.gz https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim /opt/nvim-linux-x86_64
