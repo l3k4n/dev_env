@@ -12,12 +12,11 @@ if ! $(mokutil --sb-state | grep -q "SecureBoot disabled"); then
     error "SecureBoot must be disabled"
 fi
 
-TMP_INSTALL_DIR=$(mktemp)
 note "created tmp dir $TMP_INSTALL_DIR"
 
 inform "updating apt"
-silent_exec "sudo apt-get -qq -y update"
-silent_exec "sudo apt-get -qq -y upgrade"
+sudo apt-get -qq -y update
+sudo apt-get -qq -y upgrade
 
 inform "installing general dependencies"
 apt_install cmake git-all stow autoconf build-essential curl jq wget
@@ -57,21 +56,21 @@ apt_install_no_recommends sddm
 inform "setting up neovim"
 apt_install xclip ripgrep
 note "downloading v0.11.1"
-silent_exec curl -L -o $TMP_INSTALL_DIR/nvim.tar.gz https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.tar.gz
+curl -sS -L -o $TMP_INSTALL_DIR/nvim.tar.gz https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim /opt/nvim-linux-x86_64
 note "unpacking nvim"
-silent_exec sudo tar -C /opt -xzf $TMP_INSTALL_DIR/nvim.tar.gz
+sudo tar -C /opt -xzf $TMP_INSTALL_DIR/nvim.tar.gz
 bashrc_append 'PATH="$PATH:/opt/nvim-linux-x86_64/bin"'
 
 # qmk
 if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     inform "setting up qmk"
     apt_install python3-pip
-    silent_exec sudo python3 -m pip install qmk
+    sudo python3 -m pip install qmk
     bashrc_append 'PATH="$PATH:$HOME/.local/bin"'
     source $HOME/.bashrc
     note "running qmk setup (this might take a few minutes)"
-    silent_exec qmk setup -y zsa/qmk_firmware -b firmware23
+    qmk setup -y zsa/qmk_firmware -b firmware23
 fi
 
 # firefox
@@ -80,56 +79,45 @@ if query "Do you want to install/replace with a version from the mozilla reposit
     sudo install -d -m 0755 /etc/apt/keyrings
     wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
     echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
-    echo -e "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000" | sudo tee /etc/apt/preferences.d/mozilla
+    echo -e "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000" | sudo tee /etc/apt/preferences.d/mozilla > /dev/null
 
     note "uninstalling firefox-esr"
-    sudo apt-get -qq autoremove --purge firefox-esr
+    sudo apt-get autoremove -qq --purge firefox-esr
 
-    sudo apt-get update -qq
+    sudo apt-get -qq -y update
     apt_install firefox
 fi
 
-# nodejs
-if query "Do you want to install nodejs?"; then
-    inform "setting up nodejs"
-    note "installing nvm"
-    silent_exec "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
-    export NVM_DIR="$HOME/.nvm"
-    note "installing nodejs v20"
-    silent_exec "source $NVM_DIR/nvm.sh && nvm install 20"
-fi
-
-# c++
-if query "Do you want to install c++ std lib?"; then
-    inform "c++ standard dependencies"
-    apt_install libstdc++-12-dev
+# programming languages
+if query "Do you want to setup frequently used languages and tools?"; then
+    bash ./setup-lang-tools.sh
 fi
 
 # wifi adapter driver
 if query "Do you want install morrownr/8812au-20210820 driver (last tested on kernel v5.15.0-131-generic, Mint 21.3 Virginia)?"; then
     note "installing kernel headers"
     apt_install linux-headers-$(uname -r)
-    git clone https://github.com/morrownr/8812au-20210820.git $TMP_INSTALL_DIR/morrow_driver
+    git_clone https://github.com/morrownr/8812au-20210820.git $TMP_INSTALL_DIR/morrow_driver
     cd $TMP_INSTALL_DIR/morrow_driver
-    silent_exec "sudo ./install-driver.sh"
+    note "installing morrownr/8812au-20210820 driver"
+    sudo ./install-driver.sh
     cd ~-
 fi
 
 # git config
-inform "setting up git config"
 git config --global user.useConfigOnly true
-git config --global url."git@github.com:".insteadOf "https://github.com/"
+git config --global url."ssh://git@github.com".pushInsteadOf "https://github.com/"
 if query "Do you want set git global user?"; then
+    inform "setting up git config"
     echo -ne "${QUERY_COLOR}  user.name: ${RESET_COLOR}"
     read -r name
-    git config --global user.name "$name"
     echo -ne "${QUERY_COLOR}  user.email: ${RESET_COLOR}"
     read -r email
+    git config --global user.name "$name"
     git config --global user.email "$email"
-    git config --global url.ssh://git@github.com/.insteadOf https://github.com/
     note "$(git config --global --list)"
 fi
 
 inform "Setup complete"
 note "you should reboot to make sure all configs and new packages are properly loaded"
-note "don't forget to set git ssh key"
+note "don't forget to copy your ssh key to github"

@@ -4,19 +4,61 @@ ERROR_COLOR="\033[1;31m"
 NOTE_COLOR="\033[0;34m"
 QUERY_COLOR="\033[0;35m"
 RESET_COLOR="\033[0m"
-PROGRESS_SPINNER="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+TMP_INSTALL_DIR=$(mktemp -d)
 
-inform() { echo -e "\n${INFORM_COLOR}$@${RESET_COLOR}"; }
-warn() { echo -e "\n${WARNING_COLOR}WARNING: $@${RESET_COLOR}"; }
+print_boxed() {
+  local text="$@"
+  local len=${#text}
+  local horizontal=$(printf '═%.0s' $(seq 1 $((len + 2))))
+
+  echo -e "╔$horizontal╗"
+  echo -e "║ $text ║"
+  echo -e "╚$horizontal╝"
+
+
+  # # use below in case of font compatibility
+  # local len=${#text}
+  # local border=$(printf '%*s' $((len + 4)) '' | tr ' ' '*')
+  # echo "$border"
+  # echo "* $text *"
+  # echo "$border"
+}
+
+under_over_line() {
+  local text="$1"
+  local text_length=${#text}
+  local line=""
+
+  # Generate a line of tildes matching the text length
+  for (( i=0; i<text_length; i++ )); do
+    line="${line}~"
+  done
+
+  echo "$line"
+  echo "$text"
+  echo "$line"
+}
+
+
+inform() {
+    printf $INFORM_COLOR
+    print_boxed "$@"
+    printf $RESET_COLOR
+}
+
 error() {
     echo -e "\n${ERROR_COLOR}ERROR: $@${RESET_COLOR}"
     exit
 }
-note() { echo -e "${NOTE_COLOR}> $@${RESET_COLOR}"; }
 
-silent_exec() {
-    msg=$(bash -c "$*" 2>&1 > /dev/null)
-    if [ $? -ne 0 ]; then error "$msg"; fi
+note() {
+    echo -e "${NOTE_COLOR}> $@${RESET_COLOR}"
+}
+
+warn() {
+    printf $WARNING_COLOR
+    print_boxed "\n*** WARNING: $@ ***"
+    printf $RESET_COLOR
 }
 
 query() {
@@ -32,18 +74,18 @@ query() {
 
 apt_install() {
     note "apt installing: $*"
-    silent_exec sudo apt-get install -y $*
+    sudo apt-get install -qq -y $*
 }
 
 apt_install_no_recommends() {
     note "apt installing: $*"
-    silent_exec sudo apt-get install -y --no-install-recommends $*
+    sudo apt-get install -qq -y --no-install-recommends $*
 }
 
 git_clone() {
     GIT_TERMINAL_PROMPT=0
     note "git cloning: $@"
-    silent_exec "git clone $*"
+    git clone -q $*
     GIT_TERMINAL_PROMPT=1
 }
 
