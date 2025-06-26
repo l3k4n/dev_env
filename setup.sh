@@ -19,7 +19,7 @@ sudo apt-get -qq -y update
 sudo apt-get -qq -y upgrade
 
 inform "installing general dependencies"
-apt_install cmake git-all stow autoconf build-essential curl jq wget
+apt_install cmake git-all stow autoconf build-essential curl jq wget zip unzip
 
 inform "adding aliases to bashrc"
 bashrc_append '. .bash_aliases'
@@ -51,6 +51,12 @@ inform "setting up WM addons"
 note "installing fuzzel, waybar, sddm"
 apt_install fuzzel waybar
 apt_install_no_recommends sddm
+
+# jetbrains mono nerd font
+inform "installing JetBrains Mono font"
+wget -q https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -O $TMP_INSTALL_DIR/jetbrainsmono.zip
+sudo unzip -o -qq $TMP_INSTALL_DIR/jetbrainsmono.zip -d /usr/local/share/fonts/JetBrainsMono
+fc-cache -f -v > /dev/null
 
 # neovim
 inform "setting up neovim"
