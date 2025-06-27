@@ -52,6 +52,10 @@ note "installing fuzzel, waybar, sddm"
 apt_install fuzzel waybar
 apt_install_no_recommends sddm
 
+#clipboard
+inform "setting up clipboard"
+apt_install wl-clipboard
+
 # jetbrains mono nerd font
 inform "installing JetBrains Mono font"
 wget -q https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -O $TMP_INSTALL_DIR/jetbrainsmono.zip
