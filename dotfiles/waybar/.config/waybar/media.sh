@@ -1,17 +1,6 @@
-case "$(playerctl status)" in
-    "Playing")
-        PERCENTAGE=2
-        ;;
-    "Paused")
-        PERCENTAGE=1
-        ;;
-    "Stopped")
-        PERCENTAGE=0
-        ;;
-    *)
-        PERCENTAGE=0
-        ;;
-esac
+#!/bin/bash
 
-# printf "{\"text\": \"$(playerctl metadata title)\", \"percentage\": $PERCENTAGE}"
-printf "{\"text\": \"$(playerctl metadata title)\", \"alt\": \"$(playerctl status)\"}"
+# Check if playerctl can return a status (i.e., a player is active)
+if playerctl status &> /dev/null; then
+    printf "{\"text\": \"$(playerctl metadata title)\", \"alt\": \"$(playerctl status)\"}"
+fi
