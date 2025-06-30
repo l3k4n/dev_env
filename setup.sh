@@ -79,6 +79,7 @@ if query "Do you want to install spotify?"; then
     echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
     sudo apt-get -qq -y update
     apt_install xwayland spotify-client # note: I only got spotify to launch when I had xwayland
+    sudo cp /usr/share/spotify/spotify.desktop $HOME/.local/share/applications
 fi
 
 
