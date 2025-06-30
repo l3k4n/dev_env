@@ -56,11 +56,11 @@ apt_install_no_recommends sddm
 inform "setting up clipboard"
 apt_install wl-clipboard
 
-# jetbrains mono nerd font
+# patched jetbrains mono nerd font
 inform "installing JetBrains Mono font"
-wget -q https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -O $TMP_INSTALL_DIR/jetbrainsmono.zip
-sudo unzip -o -qq $TMP_INSTALL_DIR/jetbrainsmono.zip -d /usr/local/share/fonts/JetBrainsMono
-fc-cache -f -v > /dev/null
+wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip -O $TMP_INSTALL_DIR/jetbrainsmono.zip
+sudo unzip -o -qq $TMP_INSTALL_DIR/jetbrainsmono.zip -d /usr/local/share/fonts/JetBrainsMono_NerdFonts
+fc-cache -f -r -v > /dev/null
 
 # neovim
 inform "setting up neovim"

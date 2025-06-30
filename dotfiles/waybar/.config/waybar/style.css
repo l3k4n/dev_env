@@ -6,7 +6,7 @@
     margin-bottom: 0;
 }
 
-#battery, #temperature, #custom-mem, #pulseaudio, #clock, #workspaces, #mode {
+#battery, #temperature, #custom-mem, #pulseaudio, #custom-media, #clock, #workspaces, #mode {
     border-radius: 20px;
     background:  #041119;
     font-size: 12;
@@ -39,6 +39,14 @@ window#waybar {
 
 #workspaces button.focused {
     color: #41a8a9;
+}
+
+#custom-media {
+    margin-right: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: none;
+    color: #5c32a8;
 }
 
 #mode {
