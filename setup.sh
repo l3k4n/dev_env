@@ -48,8 +48,8 @@ apt_install sway playerctl pulseaudio-utils brightnessctl
 
 # fuzzel, waybar, sddm
 inform "setting up WM addons"
-note "installing fuzzel, waybar, sddm"
-apt_install fuzzel waybar
+note "installing xwayland, fuzzel, waybar, sddm"
+apt_install fuzzel waybar xwayland
 apt_install_no_recommends sddm
 
 #clipboard
@@ -71,6 +71,16 @@ sudo rm -rf /opt/nvim /opt/nvim-linux-x86_64
 note "unpacking nvim"
 sudo tar -C /opt -xzf $TMP_INSTALL_DIR/nvim.tar.gz
 bashrc_append 'PATH="$PATH:/opt/nvim-linux-x86_64/bin"'
+
+# spotify
+if query "Do you want to install spotify?"; then
+    inform "installing spotify"
+    curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+    echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt-get -qq -y update
+    apt_install xwayland spotify-client # note: I only got spotify to launch when I had xwayland
+fi
+
 
 # qmk
 if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
@@ -115,7 +125,6 @@ if query "Do you want install morrownr/8812au-20210820 driver (last tested on ke
 fi
 
 # git config
-rm -f $HOME/.gitconfig
 git config --global user.useConfigOnly true
 git config --global --add url."git@github.com:".pushInsteadOf "https://github.com/"
 git config --global --add url."git@github.com:".pushInsteadOf "http://github.com/"
