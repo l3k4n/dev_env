@@ -115,8 +115,11 @@ if query "Do you want install morrownr/8812au-20210820 driver (last tested on ke
 fi
 
 # git config
+rm -f $HOME/.gitconfig
 git config --global user.useConfigOnly true
-git config --global url."git@github.com:".pushInsteadOf "https://github.com/"
+git config --global --add url."git@github.com:".pushInsteadOf "https://github.com/"
+git config --global --add url."git@github.com:".pushInsteadOf "http://github.com/"
+git config --global --add url."git@github.com:".pushInsteadOf "git://github.com/"
 if query "Do you want set git global user?"; then
     inform "setting up git config"
     echo -ne "${QUERY_COLOR}  user.name: ${RESET_COLOR}"
