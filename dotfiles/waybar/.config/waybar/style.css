@@ -4,9 +4,10 @@
     padding-bottom: 0;
     margin-top: 0;
     margin-bottom: 0;
+    transition: none;
 }
 
-#battery, #temperature, #custom-mem, #pulseaudio, #custom-media, #clock, #workspaces, #mode {
+#battery, #temperature, #custom-mem, #pulseaudio, #custom-media, #clock, #workspaces, #mode, #network {
     border-radius: 20px;
     background:  #041119;
     font-size: 12;
@@ -17,7 +18,6 @@ window#waybar {
 }
 
 #workspaces {
-    transition: none;
     font-weight: 700;
 }
 
@@ -30,7 +30,6 @@ window#waybar {
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button:hover {
-    transition: none;
     box-shadow: inherit;
     text-shadow: inherit;
     border-radius: inherit;
@@ -45,7 +44,6 @@ window#waybar {
     margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;
-    transition: none;
     color: #5c32a8;
 }
 
@@ -53,7 +51,6 @@ window#waybar {
     margin-left: 8px;
     padding-left: 16px;
     padding-right: 16px;
-    transition: none;
     color: #ffffff;
 }
 
@@ -63,11 +60,17 @@ window#waybar {
     font-weight: 700;
 }
 
+#network {
+    margin-right: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: #f57e42;
+}
+
 #pulseaudio {
     margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;
-    transition: none;
     color: #1f71cc;
 }
 
@@ -75,14 +78,12 @@ window#waybar {
     margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;
-    transition: none;
     color: #18f085;
 }
 
 #temperature {
     padding-left: 16px;
     padding-right: 16px;
-    transition: none;
     color: #fe6676;
 }
 

@@ -3,7 +3,7 @@
     "margin": "7",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/media", "pulseaudio", "custom/mem", "battery", "temperature"],
+    "modules-right": ["custom/media", "pulseaudio", "network", "custom/mem", "battery", "temperature"],
 
 
     "sway/workspaces": {
@@ -25,17 +25,25 @@
         "format": "{:%a, %d %b, %I:%M %p}"
     },
 
+		"network": {
+				"format": "\udb81\udda9  {essid}",
+				"format-disconnected": "\udb81\uddaa  Disconnected",
+				"interval": 5,
+				"escape": true,
+		},
+
 		"custom/media": {
 				"exec": "bash $HOME/.config/waybar/media.sh",
 				"return-type": "json",
-				"format": "{icon}  {}",
+				"format": "{icon}{}",
 				"format-icons": {
-					"Playing": "\udb80\udf87",
-					"Paused": "\uf04c",
+					"Playing": "\udb80\udf87  ",
+					"Paused": "\uf04c  ",
 					"default": ""
 				},
 				"interval": 1,
 				"max-length": 30,
+				"hide-empty-text": true,
 		},
 
     "pulseaudio": {
@@ -63,11 +71,13 @@
         "critical-threshold": 80,
 				"format": "\uf2c9  {temperatureC}°C",
         "tooltip": false,
+        "interval": 3,
     },
 
     "battery": {
         "format": "\uf240  {capacity}%",
-        "format-charging": "{capacity}% ⚡",
+        "format-charging": "\udb85\udc0b {capacity}%",
         "tooltip": false,
+        "interval": 5,
     },
 }

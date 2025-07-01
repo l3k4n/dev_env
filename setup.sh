@@ -82,7 +82,6 @@ if query "Do you want to install spotify?"; then
     sudo cp /usr/share/spotify/spotify.desktop $HOME/.local/share/applications
 fi
 
-
 # qmk
 if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     inform "setting up qmk"
