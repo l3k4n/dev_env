@@ -91,6 +91,8 @@ if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     source $HOME/.bashrc
     note "running qmk setup (this might take a few minutes)"
     qmk setup -y zsa/qmk_firmware -b firmware23
+    cp -r l3k4n_keymap/ $HOME/Documents/
+    ln -sf $HOME/Documents/l3k4n_keymap/ $HOME/qmk_firmware/keyboards/moonlander/keymaps
 fi
 
 # firefox
