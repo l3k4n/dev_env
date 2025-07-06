@@ -85,8 +85,8 @@ fi
 # qmk
 if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     inform "setting up qmk"
-    apt_install python3-pip
-    sudo python3 -m pip install qmk
+    apt_install python3-pip pipx
+    sudo pipx install qmk
     bashrc_append 'PATH="$PATH:$HOME/.local/bin"'
     source $HOME/.bashrc
     note "running qmk setup (this might take a few minutes)"
