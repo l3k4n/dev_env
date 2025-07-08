@@ -71,6 +71,8 @@ sudo rm -rf /opt/nvim /opt/nvim-linux-x86_64
 note "unpacking nvim"
 sudo tar -C /opt -xzf $TMP_INSTALL_DIR/nvim.tar.gz
 bashrc_append 'PATH="$PATH:/opt/nvim-linux-x86_64/bin"'
+inform "setting neovim as default editor"
+sudo update-alternatives --install /usr/bin/editor editor /opt/nvim-linux-x86_64/bin/nvim 50
 
 # spotify
 if query "Do you want to install spotify?"; then
