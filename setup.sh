@@ -14,17 +14,21 @@ fi
 
 note "created tmp dir $TMP_INSTALL_DIR"
 
+reset_custom_exports_file
+
 inform "updating apt"
 sudo apt-get -qq -y update
 sudo apt-get -qq -y upgrade
 
+inform "update terminal prompt"
+custom_export "current_git_branch() {
+  local branch=\$(git branch --show-current 2>/dev/null)
+  if [ -n \"\$branch\" ]; then echo \" (\$branch)\"; fi
+}"
+custom_export "PS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]\$(current_git_branch)\[\033[00m\]\$ '"
+
 inform "installing general dependencies"
 apt_install cmake git-all stow autoconf build-essential curl jq wget zip unzip
-
-inform "adding aliases to bashrc"
-bashrc_append '. .bash_aliases'
-
-apt_install cmake git-all stow autoconf build-essential curl jq
 
 # dotfiles
 inform "stowing dotfiles"
@@ -70,7 +74,7 @@ curl -sS -L -o $TMP_INSTALL_DIR/nvim.tar.gz https://github.com/neovim/neovim/rel
 sudo rm -rf /opt/nvim /opt/nvim-linux-x86_64
 note "unpacking nvim"
 sudo tar -C /opt -xzf $TMP_INSTALL_DIR/nvim.tar.gz
-bashrc_append 'PATH="$PATH:/opt/nvim-linux-x86_64/bin"'
+custom_export 'PATH="$PATH:/opt/nvim-linux-x86_64/bin"'
 inform "setting neovim as default editor"
 sudo update-alternatives --install /usr/bin/editor editor /opt/nvim-linux-x86_64/bin/nvim 50
 
@@ -89,7 +93,7 @@ if query "Do you want to setup qmk for the ZSA Moonlander Mark I?"; then
     inform "setting up qmk"
     apt_install python3-pip pipx
     sudo pipx install qmk
-    bashrc_append 'PATH="$PATH:$HOME/.local/bin"'
+    custom_export 'PATH="$PATH:$HOME/.local/bin"'
     source $HOME/.bashrc
     note "running qmk setup (this might take a few minutes)"
     qmk setup -y zsa/qmk_firmware -b firmware23

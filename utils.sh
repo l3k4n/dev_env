@@ -5,6 +5,7 @@ NOTE_COLOR="\033[0;34m"
 QUERY_COLOR="\033[0;35m"
 RESET_COLOR="\033[0m"
 TMP_INSTALL_DIR=$(mktemp -d)
+CUSTOM_EXPORTS_FILE="$HOME/.l3k4n_exports.sh"
 
 print_boxed() {
   local text="$@"
@@ -89,6 +90,15 @@ git_clone() {
     GIT_TERMINAL_PROMPT=1
 }
 
-bashrc_append () {
-    if ! grep -q "$@" ~/.bashrc; then echo "$@" >> ~/.bashrc; fi
+reset_custom_exports_file() {
+    rm -f $CUSTOM_EXPORTS_FILE
+    touch $CUSTOM_EXPORTS_FILE
+
+    if ! grep -q "source $CUSTOM_EXPORTS_FILE" $HOME/.bashrc; then
+        echo "source $CUSTOM_EXPORTS_FILE" >> $HOME/.bashrc
+    fi
+}
+
+custom_export() {
+    echo "$@" >> $CUSTOM_EXPORTS_FILE
 }
