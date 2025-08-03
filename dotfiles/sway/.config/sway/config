@@ -72,6 +72,8 @@ bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
 # Swap focus between the tiling area and the floating area
 bindsym $mod+space focus mode_toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+s exec systemctl suspend
 
 # start resize mode
 bindsym $mod+r mode "resize"
