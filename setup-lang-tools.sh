@@ -23,3 +23,10 @@ if query "Do you want to install c++ std lib?"; then
     apt_install libstdc++-12-dev
 fi
 
+# go
+if query "Do you want to install golang?"; then
+    curl -sS -L -o $TMP_INSTALL_DIR/go.tar.gz "https://dl.google.com/go/go1.25.0.linux-amd64.tar.gz"
+    sudo rm -rf /opt/go
+    sudo tar -C /opt -xzf $TMP_INSTALL_DIR/go.tar.gz
+    custom_export 'PATH="$PATH:/opt/go/bin"'
+fi
