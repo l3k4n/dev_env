@@ -134,6 +134,7 @@ fi
 
 # git config
 rm -f $HOME/.gitconfig
+git config --global init.defaultBranch main
 git config --global user.useConfigOnly true
 git config --global --add url."git@github.com:".pushInsteadOf "https://github.com/"
 git config --global --add url."git@github.com:".pushInsteadOf "http://github.com/"
