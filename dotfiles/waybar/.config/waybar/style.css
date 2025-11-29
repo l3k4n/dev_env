@@ -7,7 +7,7 @@
     transition: none;
 }
 
-#battery, #temperature, #custom-mem, #pulseaudio, #custom-media, #clock, #workspaces, #mode, #network {
+#battery, #temperature, #custom-mem, #pulseaudio, #custom-media, #clock, #workspaces, #mode, #network, #custom-audio {
     border-radius: 20px;
     background:  #041119;
     font-size: 12;
@@ -58,6 +58,7 @@ window#waybar {
     padding: 0 20px;
     color: #41a8a9;
     font-weight: 700;
+    margin-left: 8px;
 }
 
 #network {
@@ -67,7 +68,7 @@ window#waybar {
     color: #f57e42;
 }
 
-#pulseaudio {
+#pulseaudio, #custom-audio {
     margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;

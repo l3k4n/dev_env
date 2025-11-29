@@ -1,10 +1,8 @@
 {
     "position": "top",
     "margin": "7",
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["clock"],
-    "modules-right": ["custom/media", "pulseaudio", "network", "custom/mem", "battery", "temperature"],
-
+    "modules-left": ["sway/workspaces", "sway/mode", "clock"],
+    "modules-right": ["custom/audio", "custom/media", "pulseaudio", "network", "custom/mem", "battery", "temperature"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -42,21 +40,22 @@
 					"default": ""
 				},
 				"interval": 1,
+				"max-length": 20,
+				"hide-empty-text": true,
+		},
+
+		"custom/audio": {
+				"exec": "bash $HOME/.config/waybar/audio.sh",
+				"return-type": "json",
+				"format": "\uee58  {}",
+				"interval": 3,
 				"max-length": 30,
 				"hide-empty-text": true,
 		},
 
     "pulseaudio": {
-        "format": "{icon}  {volume}%",
+        "format": "\uf028  {volume}%",
         "format-muted": "\ueee8  {volume}%",
-				"format-icons": {
-					"headphones": "\uee58",
-					"handsfree": "\uee58",
-					"headset": "\uee58",
-					"portable": "\uee58",
-					"default": "\uf028"
-				},
-
         "tooltip": false,
     },
 
