@@ -106,8 +106,6 @@ return {
     nmap('<leader><space>', require('telescope.builtin').buffers, '[ ] Find existing buffers')
     nmap('<leader>?', require('telescope.builtin').oldfiles, '[?] Find recently opened files')
     nmap('<leader>/', fuzzy_find_current_buf, '[/] Fuzzily search in current buffer')
-    nmap('<leader>ss', require('telescope.builtin').builtin, '[S]earch [S]elect Telescope')
-    nmap('<leader>gf', require('telescope.builtin').git_files, 'Search [G]it [F]iles')
     nmap('<leader>sf', require('telescope.builtin').find_files, '[S]earch [F]iles')
     nmap('<leader>sh', require('telescope.builtin').help_tags, '[S]earch [H]elp')
     nmap('<leader>sw', require('telescope.builtin').grep_string, '[S]earch current [W]ord')
