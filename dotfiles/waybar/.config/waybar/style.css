@@ -1,16 +1,14 @@
 * {
     font-family: JetBrains Mono;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    transition: none;
+    font-size: 12;
+    border: none;
 }
 
-#battery, #temperature, #custom-mem, #pulseaudio, #custom-media, #clock, #workspaces, #mode, #network, #custom-audio {
+#battery, #memory, #cpu, #pulseaudio, #custom-media, #clock, #workspaces, #mode, #network, #custom-audio {
     border-radius: 20px;
     background:  #041119;
-    font-size: 12;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 window#waybar {
@@ -25,7 +23,6 @@ window#waybar {
     margin: 0 -5px;
     background: transparent;
     color: #084252;
-
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -33,7 +30,6 @@ window#waybar {
     box-shadow: inherit;
     text-shadow: inherit;
     border-radius: inherit;
-    border: none;
 }
 
 #workspaces button.focused {
@@ -41,16 +37,10 @@ window#waybar {
 }
 
 #custom-media {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
     color: #5c32a8;
 }
 
 #mode {
-    margin-left: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
     color: #ffffff;
 }
 
@@ -58,43 +48,30 @@ window#waybar {
     padding: 0 20px;
     color: #41a8a9;
     font-weight: 700;
-    margin-left: 8px;
 }
 
 #network {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
     color: #f57e42;
 }
 
 #pulseaudio, #custom-audio {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
     color: #1f71cc;
 }
 
-#custom-mem {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
+/* Couldn't figure out why horizontal groups weren't working so make cpu + memory look like a group with css*/
+#cpu {
     color: #18f085;
+    padding-right: 0;
+    border-radius: 20px 0 0 20px;
 }
-
-#temperature {
-    padding-left: 16px;
-    padding-right: 16px;
-    color: #fe6676;
-}
-
-#temperature.critical {
-    color: #eb4d4b;
+#memory {
+    color: #18f085;
+    margin-left: -8px;
+    border-radius: 0 20px 20px 0;
+    padding-left: 0;
 }
 
 #battery {
-    margin-right: 8px;
-    padding: 0 16px;
     color: #fce402;
 }
 

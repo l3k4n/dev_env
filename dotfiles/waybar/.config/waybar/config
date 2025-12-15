@@ -1,8 +1,9 @@
 {
     "position": "top",
-    "margin": "7",
+		"spacing": 8,
+    "margin": "8",
     "modules-left": ["sway/workspaces", "sway/mode", "clock"],
-    "modules-right": ["custom/audio", "custom/media", "pulseaudio", "network", "custom/mem", "battery", "temperature"],
+    "modules-right": ["custom/audio", "custom/media", "pulseaudio", "network", "cpu", "memory", "battery"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -47,7 +48,7 @@
 		"custom/audio": {
 				"exec": "bash $HOME/.config/waybar/audio.sh",
 				"return-type": "json",
-				"format": "\uee58  {}",
+				"format": "\uee58  {} \udb80\udc79",
 				"interval": 3,
 				"max-length": 30,
 				"hide-empty-text": true,
@@ -59,19 +60,22 @@
         "tooltip": false,
     },
 
-    "custom/mem": {
-        "format": "\udb80\udf5b  {}",
-        "interval": 5,
-        "exec": "free -h | awk '/Mem:/{printf $3}'",
+		"cpu": {
+				"interval": 3,
+				"format": "\udb81\ude1a {usage}%  ", 
+				"exec": "bash $HOME/.config/waybar/audio.sh",
+				"states": {
+						"critical": 3,
+						"warning": 70
+				},
         "tooltip": false,
-    },
+		},
 
-    "temperature": {
-        "critical-threshold": 80,
-				"format": "\uf2c9  {temperatureC}°C",
+		"memory": {
+				"interval": 3,
+				"format": "\udb80\udf5b {percentage}%",
         "tooltip": false,
-        "interval": 3,
-    },
+		},
 
     "battery": {
         "format": "\uf240  {capacity}%",
