@@ -1,9 +1,9 @@
 {
     "position": "top",
-		"spacing": 8,
-    "margin": "8",
-    "modules-left": ["sway/workspaces", "sway/mode", "clock"],
-    "modules-right": ["custom/audio", "custom/media", "pulseaudio", "network", "cpu", "memory", "battery"],
+		"spacing": 5,
+    "margin": 5,
+    "modules-left": ["sway/workspaces", "clock", "sway/mode"],
+    "modules-right": ["custom/media", "custom/audio", "pulseaudio", "network", "cpu", "memory", "battery"],
 
     "sway/workspaces": {
         "disable-scroll": true,

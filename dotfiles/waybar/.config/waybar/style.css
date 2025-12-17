@@ -1,12 +1,14 @@
 * {
     font-family: JetBrains Mono;
-    font-size: 12;
+    font-size: 11;
     border: none;
 }
 
 #battery, #memory, #cpu, #pulseaudio, #custom-media, #clock, #workspaces, #mode, #network, #custom-audio {
     border-radius: 20px;
-    background:  #041119;
+    /* background:  #041119; */
+    background: rgba(0,0,0,0.7);
+
     padding-left: 16px;
     padding-right: 16px;
 }
@@ -15,12 +17,8 @@ window#waybar {
     background: transparent;
 }
 
-#workspaces {
-    font-weight: 700;
-}
-
 #workspaces button, #workspaces button.persistent {
-    margin: 0 -5px;
+    margin: -2px -5px;
     background: transparent;
     color: #084252;
 }
@@ -37,7 +35,7 @@ window#waybar {
 }
 
 #custom-media {
-    color: #5c32a8;
+    color: #ed07ce;
 }
 
 #mode {
@@ -55,7 +53,7 @@ window#waybar {
 }
 
 #pulseaudio, #custom-audio {
-    color: #1f71cc;
+    color: #0786ed;
 }
 
 /* Couldn't figure out why horizontal groups weren't working so make cpu + memory look like a group with css*/
@@ -66,7 +64,7 @@ window#waybar {
 }
 #memory {
     color: #18f085;
-    margin-left: -8px;
+    margin-left: -5px;
     border-radius: 0 20px 20px 0;
     padding-left: 0;
 }
